@@ -1,0 +1,31 @@
+library(lpSolve)
+
+########################################################################
+# Problem #2
+
+# Initialize A and b
+b = matrix(c(1,0,.25,.15),4,1)
+A = matrix(c(1,.45,0,.14,1,-.55,1,.2,1,0,0,.2,1,0,0,.1),4,4)
+
+# Solve for percents and amounts
+percents = solve(A) %*% b
+print(percents)
+
+amounts = percents*100
+print(amounts)
+
+
+########################################################################
+# Problem #4
+
+# Initialize A and b
+b = matrix(c(-45,-3,-31,-45,18,8,20,2,-27,-38,0),11,1)
+A = matrix(c(1,1,1,1,0,0,0,0,0,0,1,-1,0,0,0,1,1,1,0,0,0,1,0,-1,0,0,-1,0,0,1,1,0,1,0,0,-1,0,0,-1,0,-1,0,1,1,0,0,0,-1,0,0,-1,0,-1,-1,1),11,5)
+
+# Solve for A_hat and b_hat
+A_hat = t(A) %*% A
+b_hat = t(A) %*% b
+
+# Solve for ranks with A_hat and b_hat
+ranks = solve(A_hat) %*% b_hat
+print(ranks)
