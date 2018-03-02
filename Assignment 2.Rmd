@@ -1,0 +1,186 @@
+---
+title: "Assignment 2"
+author: "Brett Scroggins"
+date: "Due 2/7/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Problem 1
+
+```{r,echo=FALSE}
+# 1A
+library(lpSolve)
+c1 = c(4,5)
+print('c1a:')
+print(c1)
+
+A1 = matrix(c(2,3),1,2)
+print('A1a:')
+print(A1)
+
+b1 = 60
+print('b1a:')
+print(b1)
+
+dir1 = '<='
+sol1 = lp('max',c1,A1,dir1,b1)
+
+print('Solution to 1A is:')
+print(sol1)
+print(sol1$solution)
+
+# 1B
+A1b = matrix(c(2,1,3,-1),2,2)
+print('A1b:')
+print(A1b)
+
+b1b = c(60,0)
+print('b1b:')
+print(b1b)
+
+dir1b = rep('<=',2)
+sol1b = lp('max',c1,A1b,dir1b,b1b)
+
+print('Solution to 1B is:')
+print(sol1b)
+print(sol1b$solution)
+```
+
+## Problem 2
+
+```{r,echo=FALSE}
+# 2b
+c2b = c(2000,3000)
+print('c2b:')
+print(c2b)
+
+A2b = matrix(c(3,2,1,2,4,1),3,2)
+print('A2b:')
+print(A2b)
+
+b2b = c(1000,1200,450)
+print('b2b:')
+print(b2b)
+
+dir2b = rep('<=',3)
+sol2b = lp('max',c2b,A2b,dir2b,b2b)
+
+print('Solution to 2b is:')
+print(sol2b)
+print(sol2b$solution)
+
+# 2c
+fert = 200
+sol_matrix = matrix(0,21,3)
+i = 1
+
+while(fert <= 2200){
+  b2c = c(1000,fert,450)
+  sol2c = lp('max',c2b,A2b,dir2b,b2c)
+  sol_matrix[i,1] = sol2c$solution[1]
+  sol_matrix[i,2] = sol2c$solution[2]
+  sol_matrix[i,3] = fert
+  fert = fert + 100
+  i = i + 1
+}
+
+print('Solution matrix is:')
+print(sol_matrix)
+```
+
+## Problem 3
+
+```{r,echo=FALSE}
+c3 = rep(c(13,16,16,14,39),2)
+print('c3 =')
+print(c3)
+
+A3 = matrix(0,14,10)
+
+A3[1,1:5] = 1
+A3[2,6:10] = 1
+A3[3,1:5] = c(11,53,5,5,29)
+A3[4,6:10] = c(3,6,5,1,34)
+A3[5:9,1:5] = (diag(5)*40)
+A3[10:14,6:10] = (diag(5)*20)
+print('A3:')
+print(A3)
+
+b3 = c(1,1,40,20,11,53,5,5,29,3,6,5,1,34)
+print('b3:')
+print(b3)
+
+dir3 = rep('<=',14)
+sol3 = lp('max',c3,A3,dir3,b3)
+
+print('Solution to 3 is:')
+print(sol3)
+print(sol3$solution)
+
+time0 = sol3$solution[1:5]*40
+time0
+time1 = sol3$solution[6:10]*20
+time1
+```
+
+## Problem 4
+
+```{r,echo=FALSE}
+c4 = c(.18,.23,.05)
+print('c4:')
+print(c4)
+
+A4 = matrix(0,7,3)
+A4[1,1:3] = c(107,500,0)
+A4[2,1:3] = A4[1,1:3]*-1
+A4[3,1:3] = c(72,121,65)
+A4[4,1:3] = A4[3,1:3]*-1
+A4[5:7,1:3] = diag(3)
+print('A4:')
+print(A4)
+
+b4 = c(50000,-5000,2250,-2000,10,10,10)
+print('b4:')
+print(b4)
+
+dir4 = rep('<=',7)
+sol4 = lp('min',c4,A4,dir4,b4)
+
+print('Solution to 4:')
+print(sol4)
+print(sol4$solution)
+```
+
+## Problem 5
+
+```{r,echo=FALSE}
+c5 = rep(1,6)
+print('c5:')
+print(c5)
+
+A5 = matrix(0,12,6)
+A5[1,1:6] = c(1,0,0,1,0,0)
+A5[2,1:6] = A5[1,1:6]*-1
+A5[3,1:6] = c(0,1,0,0,1,0)
+A5[4,1:6] = A5[3,1:6]*-1
+A5[5,1:6] = c(0,0,1,0,0,1)
+A5[6,1:6] = A5[5,1:6]*-1
+A5[7:12,1:6] = diag(6)
+print('A5:')
+print(A5)
+
+b5 = c(2,-1.2,2,-1.5,3,-2,1,1.3,1.4,1,1.2,1.6)
+print('b5:')
+print(b5)
+
+dir5 = rep('<=',12)
+sol5 = lp('max',c5,A5,dir5,b5)
+
+print('Solution to 5:')
+print(sol5)
+print(sol5$solution)
+```
